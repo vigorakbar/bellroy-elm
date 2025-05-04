@@ -1,6 +1,5 @@
 module Main exposing (..)
 
-import Array
 import Browser
 import Html exposing (Html, div, h2, text)
 import Html.Attributes exposing (class)
@@ -86,7 +85,7 @@ view model =
         Success productList ->
             div [ class "container" ]
                 [ h2 [ class "container__title" ] [ text "Traveling soon? These travel products will help." ]
-                , ProductCard.view (Array.get 0 (Array.fromList productList))
+                , div [ class "product-card-container" ] (List.map ProductCard.view productList)
                 ]
 
 
@@ -115,6 +114,9 @@ productsDecoder =
 
 variantDecoder : Decode.Decoder Variant
 variantDecoder =
-    Decode.map2 Variant
+    Decode.map5 Variant
         (Decode.field "colorName" Decode.string)
+        (Decode.field "color" Decode.string)
         (Decode.field "imageUrl" Decode.string)
+        (Decode.field "openedImageUrl" Decode.string)
+        (Decode.field "isNew" Decode.bool)

@@ -3,7 +3,10 @@ module Product exposing (Product, Variant)
 
 type alias Variant =
     { colorName : String
+    , color : String
     , imageUrl : String
+    , openedImageUrl : String
+    , isNew : Bool
     }
 
 

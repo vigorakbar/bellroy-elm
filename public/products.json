@@ -3,25 +3,56 @@
     "name": "Lite Travel Pack 30L",
     "price": "$289",
     "description": "30L / Compact and optimized for carry-on",
+    "label": "",
     "variants": [
-      { "colorName": "Black", "imageUrl": "/images/notesleeve-black.png" },
-      { "colorName": "Ash", "imageUrl": "/images/notesleeve-ash.png" },
-      { "colorName": "Clay", "imageUrl": "/images/notesleeve-clay.png" }
+      {
+        "colorName": "Black",
+        "color": "rgb(54, 54, 54)",
+        "imageUrl": "/images/notesleeve-black.png",
+        "openedImageUrl": "/images/notesleeve-black-opened.png",
+        "isNew": false
+      },
+      {
+        "colorName": "Ash",
+        "color": "rgb(220, 220, 220)",
+        "imageUrl": "/images/notesleeve-ash.png",
+        "openedImageUrl": "/images/notesleeve-ash-opened.png",
+        "isNew": true
+      },
+      {
+        "colorName": "Clay",
+        "color": "rgb(175, 68, 52)",
+        "imageUrl": "/images/notesleeve-clay.png",
+        "openedImageUrl": "/images/notesleeve-clay-opened.png",
+        "isNew": false
+      }
     ]
   },
   {
     "name": "Venture Sling 6L",
     "price": "$189",
-    "description": "6L / An organized sling that’s ready for adventure",
+    "description": "6L / An organized sling that's ready for adventure",
     "variants": [
-      { "colorName": "Black", "imageUrl": "/images/notesleeve-black.png" },
       {
-        "colorName": "NightSky",
-        "imageUrl": "/images/notesleeve-nightsky.png"
+        "colorName": "Black",
+        "color": "rgb(54, 54, 54)",
+        "imageUrl": "/images/notesleeve-black.png",
+        "openedImageUrl": "/images/notesleeve-black-opened.png",
+        "isNew": true
       },
       {
-        "colorName": "RangerGreen",
-        "imageUrl": "/images/notesleeve-rangergreen.png"
+        "colorName": "Night Sky",
+        "color": "rgb(33, 46, 65)",
+        "imageUrl": "/images/notesleeve-nightsky.png",
+        "openedImageUrl": "/images/notesleeve-nightsky-opened.png",
+        "isNew": false
+      },
+      {
+        "colorName": "Ranger Green",
+        "color": "rgb(108, 127, 77)",
+        "imageUrl": "/images/notesleeve-rangergreen.png",
+        "openedImageUrl": "/images/notesleeve-rangergreen-opened.png",
+        "isNew": true
       }
     ]
   }

@@ -1,12 +1,113 @@
+.product-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
 .product-card {
   display: grid;
   grid-row: span 4 / span 4;
   gap: 0.5rem;
-  padding-bottom: .75rem;
+  padding-bottom: 0.75rem;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   grid-template-rows: subgrid;
   scroll-snap-align: start;
   position: relative;
   color: rgb(51, 51, 51);
   background-color: rgb(247, 247, 247);
+  cursor: pointer;
+  flex: 1;
+  min-width: 200px;
 }
+
+.product-card__image {
+  grid-row-start: 1;
+  grid-column-start: 1;
+  position: relative;
+  grid-row: span 1 / span 1;
+}
+.product-card__image-outer {
+  aspect-ratio: 1 / 1;
+}
+.product-card__image-inner {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  position: relative;
+}
+.product-card__image-element {
+  padding: 0 1rem;
+  max-height: 18rem;
+  object-position: center;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  border-style: none;
+}
+.product-card__label {
+  grid-row-start: 1;
+  grid-column-start: 1;
+  position: relative;
+  padding: 0.75rem;
+  align-self: flex-end;
+  justify-self: start;
+  grid-row: span 1 / span 1;
+}
+.product-card__main-info {
+  grid-row-start: 2;
+  grid-column-start: 1;
+  padding: 0 0.75rem;
+  grid-row: span 1 / span 1;
+}
+.product-card__color-picker {
+  grid-row-start: 3;
+  grid-column-start: 1;
+  position: relative;
+  grid-row: span 1 / span 1;
+  display: inline-flex;
+  gap: 0.75rem;
+  padding: 0 0.75rem;
+}
+.product-card__description {
+  grid-row-start: 4;
+  grid-column-start: 1;
+  padding: 0 0.75rem;
+  grid-row: span 1 / span 1;
+  font-size: 12px;
+  color: rgb(102, 102, 102);
+  line-height: 15px;
+  height: 30px;
+}
+.product-card__description-text {
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  margin: 0;
+}
+.product-card__price {
+  font-weight: 700;
+}
+
+.color-picker-button {
+  border-radius: 50%;
+  padding: 0;
+  width: 19px;
+  height: 19px;
+}
+
+.color-picker-button__active {
+  outline-color: #fff;
+  outline-offset: -3px;
+  outline-width: 2px;
+  outline-style: solid;
+}
+
+
