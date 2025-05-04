@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Lite Travel Pack 30L",
+    "price": "$289",
+    "description": "30L / Compact and optimized for carry-on",
+    "variants": [
+      { "colorName": "Black", "imageUrl": "/images/notesleeve-black.png" },
+      { "colorName": "Ash", "imageUrl": "/images/notesleeve-ash.png" },
+      { "colorName": "Clay", "imageUrl": "/images/notesleeve-clay.png" }
+    ]
+  },
+  {
+    "name": "Venture Sling 6L",
+    "price": "$189",
+    "description": "6L / An organized sling that’s ready for adventure",
+    "variants": [
+      { "colorName": "Black", "imageUrl": "/images/notesleeve-black.png" },
+      {
+        "colorName": "NightSky",
+        "imageUrl": "/images/notesleeve-nightsky.png"
+      },
+      {
+        "colorName": "RangerGreen",
+        "imageUrl": "/images/notesleeve-rangergreen.png"
+      }
+    ]
+  }
+]

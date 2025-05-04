@@ -1,0 +1,21 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(239, 239, 239);
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2.75rem;
+}
