@@ -8,22 +8,22 @@
       {
         "colorName": "Black",
         "color": "rgb(54, 54, 54)",
-        "imageUrl": "/images/notesleeve-black.png",
-        "openedImageUrl": "/images/notesleeve-black-opened.png",
+        "imageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_image/SGD/BLPA-BLK-241/0?auto=format&fit=max&w=320",
+        "openedImageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_explode_image/SGD/BLPA-BLK-241/0?auto=format&fit=max&w=320",
         "isNew": false
       },
       {
         "colorName": "Ash",
         "color": "rgb(220, 220, 220)",
-        "imageUrl": "/images/notesleeve-ash.png",
-        "openedImageUrl": "/images/notesleeve-ash-opened.png",
+        "imageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_image/SGD/BLPA-ASH-241/0?auto=format&fit=max&w=320",
+        "openedImageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_explode_image/SGD/BLPA-ASH-241/0?auto=format&fit=max&w=320",
         "isNew": true
       },
       {
         "colorName": "Clay",
         "color": "rgb(175, 68, 52)",
-        "imageUrl": "/images/notesleeve-clay.png",
-        "openedImageUrl": "/images/notesleeve-clay-opened.png",
+        "imageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_image/SGD/BLPA-CLY-241/0?auto=format&fit=max&w=320",
+        "openedImageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_explode_image/SGD/BLPA-CLY-241/0?auto=format&fit=max&w=320",
         "isNew": false
       }
     ]
@@ -36,22 +36,50 @@
       {
         "colorName": "Black",
         "color": "rgb(54, 54, 54)",
-        "imageUrl": "/images/notesleeve-black.png",
-        "openedImageUrl": "/images/notesleeve-black-opened.png",
+        "imageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_image/SGD/BMVA-BLK-228/0?auto=format&fit=max&w=320",
+        "openedImageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_explode_image/SGD/BMVA-BLK-228/0?auto=format&fit=max&w=320",
         "isNew": true
       },
       {
         "colorName": "Night Sky",
         "color": "rgb(33, 46, 65)",
-        "imageUrl": "/images/notesleeve-nightsky.png",
-        "openedImageUrl": "/images/notesleeve-nightsky-opened.png",
+        "imageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_image/SGD/BMVA-NSK-218/0?auto=format&fit=max&w=320",
+        "openedImageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_explode_image/SGD/BMVA-NSK-218/0?auto=format&fit=max&w=320",
         "isNew": false
       },
       {
         "colorName": "Ranger Green",
         "color": "rgb(108, 127, 77)",
-        "imageUrl": "/images/notesleeve-rangergreen.png",
-        "openedImageUrl": "/images/notesleeve-rangergreen-opened.png",
+        "imageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_image/SGD/BMVA-RGN-213/0?auto=format&fit=max&w=320",
+        "openedImageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_explode_image/SGD/BMVA-RGN-213/0?auto=format&fit=max&w=320",
+        "isNew": true
+      }
+    ]
+  },
+  {
+    "name": "Tech Kit",
+    "price": "$89",
+    "description": "Charger, mouse, powerbank, dongles, cables, earbuds",
+    "variants": [
+      {
+        "colorName": "Black",
+        "color": "rgb(54, 54, 54)",
+        "imageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_image/SGD/ETKA-BLK-231/0?auto=format&fit=max&w=320",
+        "openedImageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_explode_image/SGD/ETKA-BLK-231/0?auto=format&fit=max&w=320",
+        "isNew": false
+      },
+      {
+        "colorName": "Eucalyptus",
+        "color": "rgb(168, 184, 178)",
+        "imageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_image/SGD/ETKA-EUC-230/0?auto=format&fit=max&w=320",
+        "openedImageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_explode_image/SGD/ETKA-EUC-230/0?auto=format&fit=max&w=320",
+        "isNew": false
+      },
+      {
+        "colorName": "Saltbrush",
+        "color": "rgb(228, 217, 203)",
+        "imageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_image/SGD/ETKA-SAB-217/0?auto=format&fit=max&w=320",
+        "openedImageUrl": "https://bellroy-product-images.imgix.net/bellroy_dot_com_range_page_explode_image/SGD/ETKA-SAB-217/0?auto=format&fit=max&w=320",
         "isNew": true
       }
     ]

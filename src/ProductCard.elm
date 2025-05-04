@@ -13,6 +13,7 @@ import Product exposing (Product, Variant)
 type alias Model =
     { product : Product
     , selectedVariantIndex : Int
+    , showingInside : Bool
     }
 
 
@@ -20,6 +21,7 @@ init : Product -> Model
 init product =
     { product = product
     , selectedVariantIndex = 0 -- Default to first variant
+    , showingInside = False
     }
 
 
@@ -29,6 +31,7 @@ init product =
 
 type Msg
     = SelectVariant Int
+    | ToggleInsideView
 
 
 update : Msg -> Model -> Model
@@ -36,6 +39,9 @@ update msg model =
     case msg of
         SelectVariant index ->
             { model | selectedVariantIndex = index }
+
+        ToggleInsideView ->
+            { model | showingInside = not model.showingInside }
 
 
 
@@ -53,6 +59,20 @@ view model =
                 [] ->
                     -- Fallback in case of empty variants list
                     { colorName = "", color = "#FFFFFF", imageUrl = "", openedImageUrl = "", isNew = False }
+
+        currentImageUrl =
+            if model.showingInside then
+                selectedVariant.openedImageUrl
+
+            else
+                selectedVariant.imageUrl
+
+        toggleButtonText =
+            if model.showingInside then
+                "Close ×"
+
+            else
+                "Show Inside +"
     in
     div [ class "product-card" ]
         [ div [ class "product-card__image" ]
@@ -60,11 +80,16 @@ view model =
                 [ div [ class "product-card__image-inner" ]
                     [ img
                         [ class "product-card__image-element"
-                        , src selectedVariant.imageUrl
+                        , src currentImageUrl
                         ]
                         []
                     ]
                 ]
+            , button
+                [ class "product-card__toggle-inside-button"
+                , onClick ToggleInsideView
+                ]
+                [ text toggleButtonText ]
             , div [ class "product-card__label" ]
                 [ if selectedVariant.isNew then
                     div [ class "product-card__new-label" ] [ text "New Color" ]

@@ -6188,16 +6188,23 @@ var $elm$core$Dict$fromList = function (assocs) {
 		assocs);
 };
 var $author$project$ProductCard$init = function (product) {
-	return {product: product, selectedVariantIndex: 0};
+	return {product: product, selectedVariantIndex: 0, showingInside: false};
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $elm$core$Basics$not = _Basics_not;
 var $author$project$ProductCard$update = F2(
 	function (msg, model) {
-		var index = msg.a;
-		return _Utils_update(
-			model,
-			{selectedVariantIndex: index});
+		if (msg.$ === 'SelectVariant') {
+			var index = msg.a;
+			return _Utils_update(
+				model,
+				{selectedVariantIndex: index});
+		} else {
+			return _Utils_update(
+				model,
+				{showingInside: !model.showingInside});
+		}
 	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
@@ -6265,6 +6272,8 @@ var $author$project$Main$ProductCardMsg = F2(
 	});
 var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
 var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
+var $author$project$ProductCard$ToggleInsideView = {$: 'ToggleInsideView'};
+var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$core$List$drop = F2(
 	function (n, list) {
 		drop:
@@ -6287,6 +6296,23 @@ var $elm$core$List$drop = F2(
 		}
 	});
 var $elm$html$Html$img = _VirtualDom_node('img');
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var $elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
+};
 var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
@@ -6297,7 +6323,6 @@ var $elm$html$Html$Attributes$src = function (url) {
 var $author$project$ProductCard$SelectVariant = function (a) {
 	return {$: 'SelectVariant', a: a};
 };
-var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$core$List$filter = F2(
 	function (isGood, list) {
 		return A3(
@@ -6322,23 +6347,6 @@ var $elm$html$Html$Attributes$classList = function (classes) {
 				$elm$core$List$map,
 				$elm$core$Tuple$first,
 				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
-};
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var $elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
 };
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
@@ -6366,6 +6374,7 @@ var $author$project$ProductCard$viewColorPickerButton = F3(
 			_List_Nil);
 	});
 var $author$project$ProductCard$view = function (model) {
+	var toggleButtonText = model.showingInside ? 'Close ×' : 'Show Inside +';
 	var selectedVariant = function () {
 		var _v0 = A2($elm$core$List$drop, model.selectedVariantIndex, model.product.variants);
 		if (_v0.b) {
@@ -6375,6 +6384,7 @@ var $author$project$ProductCard$view = function (model) {
 			return {color: '#FFFFFF', colorName: '', imageUrl: '', isNew: false, openedImageUrl: ''};
 		}
 	}();
+	var currentImageUrl = model.showingInside ? selectedVariant.openedImageUrl : selectedVariant.imageUrl;
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -6412,10 +6422,21 @@ var $author$project$ProductCard$view = function (model) {
 										_List_fromArray(
 											[
 												$elm$html$Html$Attributes$class('product-card__image-element'),
-												$elm$html$Html$Attributes$src(selectedVariant.imageUrl)
+												$elm$html$Html$Attributes$src(currentImageUrl)
 											]),
 										_List_Nil)
 									]))
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('product-card__toggle-inside-button'),
+								$elm$html$Html$Events$onClick($author$project$ProductCard$ToggleInsideView)
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(toggleButtonText)
 							])),
 						A2(
 						$elm$html$Html$div,
