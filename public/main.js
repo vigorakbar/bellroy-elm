@@ -6175,18 +6175,75 @@ var $author$project$Main$Failure = {$: 'Failure'};
 var $author$project$Main$Success = function (a) {
 	return {$: 'Success', a: a};
 };
+var $elm$core$Dict$fromList = function (assocs) {
+	return A3(
+		$elm$core$List$foldl,
+		F2(
+			function (_v0, dict) {
+				var key = _v0.a;
+				var value = _v0.b;
+				return A3($elm$core$Dict$insert, key, value, dict);
+			}),
+		$elm$core$Dict$empty,
+		assocs);
+};
+var $author$project$ProductCard$init = function (product) {
+	return {product: product, selectedVariantIndex: 0};
+};
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $author$project$ProductCard$update = F2(
+	function (msg, model) {
+		var index = msg.a;
+		return _Utils_update(
+			model,
+			{selectedVariantIndex: index});
+	});
 var $author$project$Main$update = F2(
-	function (msg, _v0) {
-		var result = msg.a;
-		if (result.$ === 'Ok') {
-			var productList = result.a;
-			return _Utils_Tuple2(
-				$author$project$Main$Success(productList),
-				$elm$core$Platform$Cmd$none);
+	function (msg, model) {
+		if (msg.$ === 'GotProducts') {
+			var result = msg.a;
+			if (result.$ === 'Ok') {
+				var productList = result.a;
+				var initialProductCards = $elm$core$Dict$fromList(
+					A2(
+						$elm$core$List$indexedMap,
+						F2(
+							function (idx, product) {
+								return _Utils_Tuple2(
+									idx,
+									$author$project$ProductCard$init(product));
+							}),
+						productList));
+				return _Utils_Tuple2(
+					$author$project$Main$Success(
+						{productCards: initialProductCards, products: productList}),
+					$elm$core$Platform$Cmd$none);
+			} else {
+				return _Utils_Tuple2($author$project$Main$Failure, $elm$core$Platform$Cmd$none);
+			}
 		} else {
-			return _Utils_Tuple2($author$project$Main$Failure, $elm$core$Platform$Cmd$none);
+			var index = msg.a;
+			var subMsg = msg.b;
+			if (model.$ === 'Success') {
+				var productCardModel = model.a;
+				var _v3 = A2($elm$core$Dict$get, index, productCardModel.productCards);
+				if (_v3.$ === 'Just') {
+					var cardModel = _v3.a;
+					var updatedCardModel = A2($author$project$ProductCard$update, subMsg, cardModel);
+					var updatedCards = A3($elm$core$Dict$insert, index, updatedCardModel, productCardModel.productCards);
+					return _Utils_Tuple2(
+						$author$project$Main$Success(
+							_Utils_update(
+								productCardModel,
+								{productCards: updatedCards})),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
+			} else {
+				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+			}
 		}
 	});
 var $elm$json$Json$Encode$string = _Json_wrap;
@@ -6202,8 +6259,44 @@ var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $author$project$Main$ProductCardMsg = F2(
+	function (a, b) {
+		return {$: 'ProductCardMsg', a: a, b: b};
+	});
+var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
+var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
+var $elm$core$List$drop = F2(
+	function (n, list) {
+		drop:
+		while (true) {
+			if (n <= 0) {
+				return list;
+			} else {
+				if (!list.b) {
+					return list;
+				} else {
+					var x = list.a;
+					var xs = list.b;
+					var $temp$n = n - 1,
+						$temp$list = xs;
+					n = $temp$n;
+					list = $temp$list;
+					continue drop;
+				}
+			}
+		}
+	});
 var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm$html$Html$p = _VirtualDom_node('p');
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $author$project$ProductCard$SelectVariant = function (a) {
+	return {$: 'SelectVariant', a: a};
+};
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$core$List$filter = F2(
 	function (isGood, list) {
@@ -6230,27 +6323,58 @@ var $elm$html$Html$Attributes$classList = function (classes) {
 				$elm$core$Tuple$first,
 				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
 };
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var $elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
+};
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$html$Html$Attributes$title = $elm$html$Html$Attributes$stringProperty('title');
-var $author$project$ProductCard$viewColorPickerButton = function (variant) {
-	return A2(
-		$elm$html$Html$button,
-		_List_fromArray(
-			[
-				A2($elm$html$Html$Attributes$style, 'background-color', variant.color),
-				A2($elm$html$Html$Attributes$style, 'border', '1px solid ' + variant.color),
-				$elm$html$Html$Attributes$title(variant.colorName),
-				$elm$html$Html$Attributes$classList(
-				_List_fromArray(
-					[
-						_Utils_Tuple2('color-picker-button', true),
-						_Utils_Tuple2('color-picker-button__active', true)
-					]))
-			]),
-		_List_Nil);
-};
-var $author$project$ProductCard$view = function (product) {
+var $author$project$ProductCard$viewColorPickerButton = F3(
+	function (selectedIndex, index, variant) {
+		return A2(
+			$elm$html$Html$button,
+			_List_fromArray(
+				[
+					A2($elm$html$Html$Attributes$style, 'background-color', variant.color),
+					A2($elm$html$Html$Attributes$style, 'border', '1px solid ' + variant.color),
+					$elm$html$Html$Attributes$title(variant.colorName),
+					$elm$html$Html$Attributes$classList(
+					_List_fromArray(
+						[
+							_Utils_Tuple2('color-picker-button', true),
+							_Utils_Tuple2(
+							'color-picker-button__active',
+							_Utils_eq(selectedIndex, index))
+						])),
+					$elm$html$Html$Events$onClick(
+					$author$project$ProductCard$SelectVariant(index))
+				]),
+			_List_Nil);
+	});
+var $author$project$ProductCard$view = function (model) {
+	var selectedVariant = function () {
+		var _v0 = A2($elm$core$List$drop, model.selectedVariantIndex, model.product.variants);
+		if (_v0.b) {
+			var first = _v0.a;
+			return first;
+		} else {
+			return {color: '#FFFFFF', colorName: '', imageUrl: '', isNew: false, openedImageUrl: ''};
+		}
+	}();
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -6287,19 +6411,32 @@ var $author$project$ProductCard$view = function (product) {
 										$elm$html$Html$img,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$class('product-card__image-element')
+												$elm$html$Html$Attributes$class('product-card__image-element'),
+												$elm$html$Html$Attributes$src(selectedVariant.imageUrl)
 											]),
 										_List_Nil)
 									]))
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('product-card__label')
+							]),
+						_List_fromArray(
+							[
+								selectedVariant.isNew ? A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('product-card__new-label')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('New Color')
+									])) : $elm$html$Html$text('')
 							]))
 					])),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('product-card__label')
-					]),
-				_List_Nil),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -6313,7 +6450,7 @@ var $author$project$ProductCard$view = function (product) {
 						_List_Nil,
 						_List_fromArray(
 							[
-								$elm$html$Html$text(product.name)
+								$elm$html$Html$text(model.product.name)
 							])),
 						A2(
 						$elm$html$Html$div,
@@ -6323,7 +6460,7 @@ var $author$project$ProductCard$view = function (product) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text(product.price)
+								$elm$html$Html$text(model.product.price)
 							]))
 					])),
 				A2(
@@ -6332,7 +6469,10 @@ var $author$project$ProductCard$view = function (product) {
 					[
 						$elm$html$Html$Attributes$class('product-card__color-picker')
 					]),
-				A2($elm$core$List$map, $author$project$ProductCard$viewColorPickerButton, product.variants)),
+				A2(
+					$elm$core$List$indexedMap,
+					$author$project$ProductCard$viewColorPickerButton(model.selectedVariantIndex),
+					model.product.variants)),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -6349,11 +6489,20 @@ var $author$project$ProductCard$view = function (product) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text(product.description)
+								$elm$html$Html$text(model.product.description)
 							]))
 					]))
 			]));
 };
+var $author$project$Main$viewProductCard = F2(
+	function (_v0, _v1) {
+		var index = _v1.a;
+		var cardModel = _v1.b;
+		return A2(
+			$elm$html$Html$map,
+			$author$project$Main$ProductCardMsg(index),
+			$author$project$ProductCard$view(cardModel));
+	});
 var $author$project$Main$view = function (model) {
 	switch (model.$) {
 		case 'Failure':
@@ -6361,7 +6510,7 @@ var $author$project$Main$view = function (model) {
 		case 'Loading':
 			return $elm$html$Html$text('Loading...');
 		default:
-			var productList = model.a;
+			var productCardModel = model.a;
 			return A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -6386,7 +6535,10 @@ var $author$project$Main$view = function (model) {
 							[
 								$elm$html$Html$Attributes$class('product-card-container')
 							]),
-						A2($elm$core$List$map, $author$project$ProductCard$view, productList))
+						A2(
+							$elm$core$List$indexedMap,
+							$author$project$Main$viewProductCard,
+							$elm$core$Dict$toList(productCardModel.productCards)))
 					]));
 	}
 };

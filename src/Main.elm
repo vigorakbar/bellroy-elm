@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Browser
+import Dict exposing (Dict)
 import Html exposing (Html, div, h2, text)
 import Html.Attributes exposing (class)
 import Http
@@ -27,10 +28,16 @@ main =
 -- MODEL
 
 
+type alias ProductCardModel =
+    { products : List Product
+    , productCards : Dict Int ProductCard.Model
+    }
+
+
 type Model
     = Failure
     | Loading
-    | Success (List Product)
+    | Success ProductCardModel
 
 
 init : () -> ( Model, Cmd Msg )
@@ -46,18 +53,49 @@ init _ =
 
 type Msg
     = GotProducts (Result Http.Error (List Product))
+    | ProductCardMsg Int ProductCard.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg _ =
+update msg model =
     case msg of
         GotProducts result ->
             case result of
                 Ok productList ->
-                    ( Success productList, Cmd.none )
+                    let
+                        initialProductCards =
+                            List.indexedMap (\idx product -> ( idx, ProductCard.init product )) productList
+                                |> Dict.fromList
+                    in
+                    ( Success
+                        { products = productList
+                        , productCards = initialProductCards
+                        }
+                    , Cmd.none
+                    )
 
                 Err _ ->
                     ( Failure, Cmd.none )
+
+        ProductCardMsg index subMsg ->
+            case model of
+                Success productCardModel ->
+                    case Dict.get index productCardModel.productCards of
+                        Just cardModel ->
+                            let
+                                updatedCardModel =
+                                    ProductCard.update subMsg cardModel
+
+                                updatedCards =
+                                    Dict.insert index updatedCardModel productCardModel.productCards
+                            in
+                            ( Success { productCardModel | productCards = updatedCards }, Cmd.none )
+
+                        Nothing ->
+                            ( model, Cmd.none )
+
+                _ ->
+                    ( model, Cmd.none )
 
 
 
@@ -82,11 +120,17 @@ view model =
         Loading ->
             text "Loading..."
 
-        Success productList ->
+        Success productCardModel ->
             div [ class "container" ]
                 [ h2 [ class "container__title" ] [ text "Traveling soon? These travel products will help." ]
-                , div [ class "product-card-container" ] (List.map ProductCard.view productList)
+                , div [ class "product-card-container" ]
+                    (List.indexedMap viewProductCard (Dict.toList productCardModel.productCards))
                 ]
+
+
+viewProductCard : Int -> ( Int, ProductCard.Model ) -> Html Msg
+viewProductCard _ ( index, cardModel ) =
+    Html.map (ProductCardMsg index) (ProductCard.view cardModel)
 
 
 
