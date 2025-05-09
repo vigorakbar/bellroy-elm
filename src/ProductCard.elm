@@ -1,5 +1,6 @@
 module ProductCard exposing (..)
 
+import Array
 import Html exposing (Html, button, div, img, p, text)
 import Html.Attributes exposing (class, classList, src, style, title)
 import Html.Events exposing (onClick)
@@ -20,7 +21,7 @@ type alias Model =
 init : Product -> Model
 init product =
     { product = product
-    , selectedVariantIndex = 0 -- Default to first variant
+    , selectedVariantIndex = 0
     , showingInside = False
     }
 
@@ -52,13 +53,9 @@ view : Model -> Html Msg
 view model =
     let
         selectedVariant =
-            case List.drop model.selectedVariantIndex model.product.variants of
-                first :: _ ->
-                    first
-
-                [] ->
-                    -- Fallback in case of empty variants list
-                    { colorName = "", color = "#FFFFFF", imageUrl = "", openedImageUrl = "", isNew = False }
+            Maybe.withDefault
+                { colorName = "", color = "#FFFFFF", imageUrl = "", openedImageUrl = "", isNew = False }
+                (Array.get model.selectedVariantIndex model.product.variants)
 
         currentImageUrl =
             if model.showingInside then
@@ -103,7 +100,7 @@ view model =
             , div [ class "product-card__price" ] [ text model.product.price ]
             ]
         , div [ class "product-card__color-picker" ]
-            (List.indexedMap (viewColorPickerButton model.selectedVariantIndex) model.product.variants)
+            (Array.indexedMap (viewColorPickerButton model.selectedVariantIndex) model.product.variants |> Array.toList)
         , div [ class "product-card__description" ]
             [ p [ class "product-card__description-text" ] [ text model.product.description ] ]
         ]
@@ -122,12 +119,3 @@ viewColorPickerButton selectedIndex index variant =
         , onClick (SelectVariant index)
         ]
         []
-
-
-
--- HELPER FUNCTION FOR MAIN MODULE
-
-
-viewProductCard : Product -> Html Msg
-viewProductCard product =
-    view (init product)

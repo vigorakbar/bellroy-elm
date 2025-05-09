@@ -1,5 +1,7 @@
 module Product exposing (Product, Variant)
 
+import Array exposing (Array)
+
 
 type alias Variant =
     { colorName : String
@@ -14,5 +16,5 @@ type alias Product =
     { name : String
     , price : String
     , description : String
-    , variants : List Variant
+    , variants : Array Variant
     }

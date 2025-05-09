@@ -1,7 +1,7 @@
 module Main exposing (..)
 
+import Array exposing (Array)
 import Browser
-import Dict exposing (Dict)
 import Html exposing (Html, div, h2, text)
 import Html.Attributes exposing (class)
 import Http
@@ -30,7 +30,7 @@ main =
 
 type alias ProductCardModel =
     { products : List Product
-    , productCards : Dict Int ProductCard.Model
+    , productCards : Array ProductCard.Model
     }
 
 
@@ -64,8 +64,8 @@ update msg model =
                 Ok productList ->
                     let
                         initialProductCards =
-                            List.indexedMap (\idx product -> ( idx, ProductCard.init product )) productList
-                                |> Dict.fromList
+                            List.map (\product -> ProductCard.init product) productList
+                                |> Array.fromList
                     in
                     ( Success
                         { products = productList
@@ -80,14 +80,14 @@ update msg model =
         ProductCardMsg index subMsg ->
             case model of
                 Success productCardModel ->
-                    case Dict.get index productCardModel.productCards of
+                    case Array.get index productCardModel.productCards of
                         Just cardModel ->
                             let
                                 updatedCardModel =
                                     ProductCard.update subMsg cardModel
 
                                 updatedCards =
-                                    Dict.insert index updatedCardModel productCardModel.productCards
+                                    Array.set index updatedCardModel productCardModel.productCards
                             in
                             ( Success { productCardModel | productCards = updatedCards }, Cmd.none )
 
@@ -124,12 +124,12 @@ view model =
             div [ class "container" ]
                 [ h2 [ class "container__title" ] [ text "Traveling soon? These travel products will help." ]
                 , div [ class "product-card-container" ]
-                    (List.indexedMap viewProductCard (Dict.toList productCardModel.productCards))
+                    (Array.indexedMap viewProductCard productCardModel.productCards |> Array.toList)
                 ]
 
 
-viewProductCard : Int -> ( Int, ProductCard.Model ) -> Html Msg
-viewProductCard _ ( index, cardModel ) =
+viewProductCard : Int -> ProductCard.Model -> Html Msg
+viewProductCard index cardModel =
     Html.map (ProductCardMsg index) (ProductCard.view cardModel)
 
 
@@ -152,7 +152,7 @@ productsDecoder =
             (Decode.field "name" Decode.string)
             (Decode.field "price" Decode.string)
             (Decode.field "description" Decode.string)
-            (Decode.field "variants" (Decode.list variantDecoder))
+            (Decode.field "variants" (Decode.array variantDecoder))
         )
 
 
